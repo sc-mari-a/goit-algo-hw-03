@@ -6,15 +6,18 @@ import re
 # Створіть функцію get_days_from_today(date), яка розраховує кількість днів між заданою датою і поточною датою.
 
 def get_days_from_today(date):
-    # перетворюємо рядок в об'єкт datetime
-    string_to_date = datetime.strptime(date, "%Y-%m-%d").date()
-    today_date = datetime.today().date()
-    difference = today_date - string_to_date
-    return f"1) Kількість днів між заданою датою ({string_to_date}) і поточною датою ({today_date}) = {difference.days}"
+    try:
+        # перетворюємо рядок в об'єкт datetime
+        string_to_date = datetime.strptime(date, "%Y-%m-%d").date()
+        today_date = datetime.today().date()
+        difference = today_date - string_to_date
+        return difference.days
+    except ValueError:
+        return "Дату введено не коректно"
 
 
-date = "2025-10-11"
-print(get_days_from_today(date))
+date = "2025.10.11"
+print("1)", get_days_from_today(date))
 
 
 # Друге завдання
@@ -22,13 +25,13 @@ print(get_days_from_today(date))
 # Вона буде повертати випадковий набір чисел у межах заданих параметрів, причому всі випадкові числа в наборі повинні бути унікальні.
 
 def get_numbers_ticket(min: int, max: int, quantity: int):
-    if min < 1 or max > 1000 or max < min:
+    if min < 1 or max > 1000 or max < min or max-min < quantity:
         return []        
     else:
         # sample - повертає список довжиною k унікальних елементів випадково вибраних з range(min, max+1)(діапазон з min до max включно(додали 1)), sorted - сортує
         return sorted(random.sample(range(min, max+1), quantity))
 
-lottery_numbers = get_numbers_ticket(1, 49, 6)
+lottery_numbers = get_numbers_ticket(10, 15, 9)
 print("2) Ваші лотерейні числа:", lottery_numbers)
 
 # Третє завдання(не обов'язкове)
